@@ -1,0 +1,8 @@
+appId: ''
+permissionInteger: 100689005
+
+botToken: ""
+commandPrefix: '!'
+logFile: '/var/log/squirrel_bot/output.log'
+logLevel: 'DEBUG'
+logMaxBytes: 1000000

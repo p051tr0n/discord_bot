@@ -1,0 +1,52 @@
+- action: Receive
+  code: 0
+  description: An event was dispatched.
+  name: Dispatch
+- action: Send/Receive
+  code: 1
+  description: Fired periodically by the client to keep the connection alive.
+  name: Heartbeat
+- action: Send
+  code: 2
+  description: Starts a new session during the initial handshake.
+  name: Identify
+- action: Send
+  code: 3
+  description: Update the client's presence.
+  name: Presence Update
+- action: Send
+  code: 4
+  description: Used to join/leave or move between voice channels.
+  name: Voice State Update
+- action: Send
+  code: 6
+  description: Resume a previous session that was disconnected.
+  name: Resume
+- action: Receive
+  code: 7
+  description: You should attempt to reconnect and resume immediately.
+  name: Reconnect
+- action: Send
+  code: 8
+  description: Request information about offline guild members in a large guild.
+  name: Request Guild Members
+- action: Receive
+  code: 9
+  description: The session has been invalidated. You should reconnect and identify/resume accordingly.
+  name: Invalid Session
+- action: Receive
+  code: 10
+  description: Sent immediately after connecting
+  name: Hello
+- action: Receive
+  code: 11
+  description: Sent in response to receiving a heartbeat to acknowledge that it has been received.
+  name: Heartbeat ACK
+- action: Receive
+  code: 12
+  description: Guild Sync
+  name: Guild Sync
+- action: Send
+  code: 31
+  description: Request information about soundboard sounds in a set of guilds.
+  name: Request Soundboard Sounds

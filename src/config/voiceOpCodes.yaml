@@ -1,0 +1,115 @@
+- binary: false
+  code: 0
+  description: Begin a voice websocket connection.
+  name: Identify
+  sentBy: client
+- binary: false
+  code: 1
+  description: Select the voice protocol.
+  name: Select Protocol
+  sentBy: client
+- binary: false
+  code: 2
+  description: Complete the websocket handshake.
+  name: Ready
+  sentBy: server
+- binary: false
+  code: 3
+  description: Keep the websocket connection alive.
+  name: Heartbeat
+  sentBy: client
+- binary: false
+  code: 4
+  description: Describe the session.
+  name: Session Description
+  sentBy: server
+- binary: false
+  code: 5
+  description: Indicate which users are speaking.
+  name: Speaking
+  sentBy: client and server
+- binary: false
+  code: 6
+  description: Sent to acknowledge a received client heartbeat.
+  name: Heartbeat ACK
+  sentBy: server
+- binary: false
+  code: 7
+  description: Resume a connection.
+  name: Resume
+  sentBy: client
+- binary: false
+  code: 8
+  description: Time to wait between sending heartbeats in milliseconds.
+  name: Hello
+  sentBy: server
+- binary: false
+  code: 9
+  description: Acknowledge a successful session resume.
+  name: Resumed
+  sentBy: server
+- binary: false
+  code: 11
+  description: One or more clients have connected to the voice channel
+  name: Clients Connect
+  sentBy: server
+- binary: false
+  code: 13
+  description: A client has disconnected from the voice channel
+  name: Client Disconnect
+  sentBy: server
+- binary: false
+  code: 21
+  description: A downgrade from the DAVE protocol is upcoming
+  name: DAVE Prepare Transition
+  sentBy: server
+- binary: false
+  code: 22
+  description: Execute a previously announced protocol transition
+  name: DAVE Execute Transition
+  sentBy: server
+- binary: false
+  code: 23
+  description: Acknowledge readiness previously announced transition
+  name: DAVE Transition Ready
+  sentBy: client
+- binary: false
+  code: 24
+  description: A DAVE protocol version or group change is upcoming
+  name: DAVE Prepare Epoch
+  sentBy: server
+- binary: true
+  code: 25
+  description: Credential and public key for MLS external sender
+  name: DAVE MLS External Sender
+  sentBy: server
+- binary: true
+  code: 26
+  description: MLS Key Package for pending group member
+  name: DAVE MLS Key Package
+  sentBy: client
+- binary: true
+  code: 27
+  description: MLS Proposals to be appended or revoked
+  name: DAVE MLS Proposals
+  sentBy: server
+- binary: true
+  code: 28
+  description: MLS Commit with optional MLS Welcome messages
+  name: DAVE MLS Commit Welcome
+  sentBy: client
+- binary: false
+  code: 29
+  description: MLS Commit to be processed for upcoming transition
+  name: DAVE MLS Announce Commit Transition
+  sentBy: server
+- binary: true
+  code: 30
+  description: MLS Welcome to group for upcoming transition
+  name: DAVE MLS Welcome
+  sentBy: server
+- binary: true
+  code: 31
+  description: Flag invalid commit or welcome
+  name: DAVE MLS Invalid Commit Welcome
+  sentBy: client

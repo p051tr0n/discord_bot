@@ -1,0 +1,33 @@
+- code: 200
+  meaning: The request completed successfully.
+  name: OK
+- code: 201
+  meaning: The entity was created successfully.
+  name: CREATED
+- code: 204
+  meaning: The request completed successfully but returned no content.
+  name: NO CONTENT
+- code: 304
+  meaning: The entity was not modified
+  name: NOT MODIFIED
+- code: 400
+  meaning: The request was improperly formatted
+  name: BAD REQUEST
+- code: 401
+  meaning: The Authorization header was missing or invalid.
+  name: UNAUTHORIZED
+- code: 403
+  meaning: The Authorization token you passed did not have permission to the resource.
+  name: FORBIDDEN
+- code: 404
+  meaning: The resource at the location specified doesn't exist.
+  name: NOT FOUND
+- code: 405
+  meaning: The HTTP method used is not valid for the location specified.
+  name: METHOD NOT ALLOWED
+- code: 429
+  meaning: You are being rate limited
+  name: TOO MANY REQUESTS
+- code: 502
+  meaning: There was not a gateway available to process your request. Wait a bit and retry.
+  name: GATEWAY UNAVAILABLE

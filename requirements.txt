@@ -1,0 +1,8 @@
+asyncio
+tornado
+discord.py
+pyyaml
+requests
+sqlalchemy
+twine
+build

@@ -1,0 +1,64 @@
+# - type: MESSAGE_CREATE
+#   filter:
+#     - condition: equals
+#       fields:
+#         channel_id: '1297327176697253972'
+#         author:
+#           id: '343235146389913601'
+#     - condition: contains
+#       fields:
+#         content: 'test'
+#   actions:
+#     - type: SEND_MESSAGE
+#       data:
+#         content: "Beep Boop Motherfucker."
+
+# - type: MESSAGE_CREATE
+#   filter:
+#     - condition: equals
+#       fields:
+#         author:
+#           id: '157328070691389440'
+  
+#   actions:
+#     - type: ADD_REACTION
+#       data:
+#         emoji: '🇧'
+#     - type: ADD_REACTION
+#       data:
+#         emoji: '🇮'
+#     - type: ADD_REACTION
+#       data:
+#         emoji: '🇹'
+#     - type: ADD_REACTION
+#       data:
+#         emoji: '🇨'
+#     - type: ADD_REACTION
+#       data:
+#         emoji: '🇭'
+
+# - type: MESSAGE_CREATE
+#   filter:
+#     - condition: equals
+#       fields:
+#         author:
+#           id: '613772070630850561'
+#   actions:
+#     - type: ADD_REACTION
+#       data:
+#         emoji: 'windows:1335862321909731369'
+
+#     - type: ADD_REACTION
+#       data:
+#         emoji: 'powershell:1298671363304722452'
+
+# - type: MESSAGE_CREATE
+#   filter:
+#     - condition: equals
+#       fields:
+#         author:
+#           id: '302241655204085760'
+#   actions:
+#     - type: ADD_REACTION
+#       data:
+#         emoji: 'robinson:1298491623914602528'

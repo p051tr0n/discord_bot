@@ -1,0 +1,216 @@
+- type: AUTO_MODERATION_RULE_CREATE
+  handler: None
+
+- type: AUTO_MODERATION_RULE_UPDATE
+  handler: None
+
+- type: AUTO_MODERATION_RULE_DELETE
+  handler: None
+
+- type: AUTO_MODERATION_ACTION_EXECUTION
+  handler: None
+
+- type: CHANNEL_CREATE
+  handler: None
+
+- type: CHANNEL_UPDATE
+  handler: None
+
+- type: CHANNEL_DELETE
+  handler: None
+
+- type: CHANNEL_PINS_UPDATE
+  handler: None
+
+- type: THREAD_CREATE
+  handler: None
+
+- type: THREAD_UPDATE
+  handler: None
+
+- type: THREAD_DELETE
+  handler: None
+
+- type: THREAD_LIST_SYNC
+  handler: None
+
+- type: THREAD_MEMBER_UPDATE
+  handler: None
+
+- type: THREAD_MEMBERS_UPDATE
+  handler: None
+
+- type: ENTITLEMENT_CREATE
+  handler: None
+
+- type: ENTITLEMENT_UPDATE
+  handler: None
+
+- type: ENTITLEMENT_DELETE
+  handler: None
+
+- type: GUILD_CREATE
+  handler: None
+
+- type: GUILD_UPDATE
+  handler: None
+
+- type: GUILD_DELETE
+  handler: None
+
+- type: GUILD_AUDIT_LOG_ENTRY_CREATE
+  handler: None
+
+- type: GUILD_BAN_ADD
+  handler: None
+
+- type: GUILD_BAN_REMOVE
+  handler: None
+
+- type: GUILD_EMOJIS_UPDATE
+  handler: None
+
+- type: GUILD_STICKERS_UPDATE
+  handler: None
+
+- type: GUILD_INTEGRATIONS_UPDATE
+  handler: None
+
+- type: GUILD_MEMBER_ADD
+  handler: None
+
+- type: GUILD_MEMBER_REMOVE
+  handler: None
+
+- type: GUILD_MEMBER_UPDATE
+  handler: None
+
+- type: GUILD_MEMBERS_CHUNK
+  handler: None
+
+- type: GUILD_ROLE_CREATE
+  handler: None
+
+- type: GUILD_ROLE_UPDATE
+  handler: None
+
+- type: GUILD_ROLE_DELETE
+  handler: None
+
+- type: GUILD_SCHEDULED_EVENT_CREATE
+  handler: None
+
+- type: GUILD_SCHEDULED_EVENT_UPDATE
+  handler: None
+
+- type: GUILD_SCHEDULED_EVENT_DELETE
+  handler: None
+
+- type: GUILD_SCHEDULED_EVENT_USER_ADD
+  handler: None
+
+- type: GUILD_SCHEDULED_EVENT_USER_REMOVE
+  handler: None
+
+- type: GUILD_SOUNDBOARD_SOUND_CREATE
+  handler: None
+
+- type: GUILD_SOUNDBOARD_SOUND_UPDATE
+  handler: None
+
+- type: GUILD_SOUNDBOARD_SOUND_DELETE
+  handler: None
+
+- type: GUILD_SOUNDBOARD_SOUNDS_UPDATE
+  handler: None
+
+- type: SOUNDBOARD_SOUNDS
+  handler: None
+
+- type: INTEGRATION_CREATE
+  handler: None
+
+- type: INTEGRATION_UPDATE
+  handler: None
+
+- type: INTEGRATION_DELETE
+  handler: None
+
+- type: INTERACTION_CREATE
+  handler: None
+
+- type: INVITE_CREATE
+  handler: None
+
+- type: INVITE_DELETE
+  handler: None
+
+- type: MESSAGE_CREATE
+  handler:
+    - HTTP
+
+- type: MESSAGE_UPDATE
+  handler: None
+
+- type: MESSAGE_DELETE
+  handler: None
+
+- type: MESSAGE_DELETE_BULK
+  handler: None
+
+- type: MESSAGE_REACTION_ADD
+  handler: None
+
+- type: MESSAGE_REACTION_REMOVE
+  handler: None
+
+- type: MESSAGE_REACTION_REMOVE_ALL
+  handler: None
+
+- type: MESSAGE_REACTION_REMOVE_EMOJI
+  handler: None
+
+- type: PRESENCE_UPDATE
+  handler: None
+
+- type: STAGE_INSTANCE_CREATE
+  handler: None
+
+- type: STAGE_INSTANCE_UPDATE
+  handler: None
+
+- type: STAGE_INSTANCE_DELETE
+  handler: None
+
+- type: SUBSCRIPTION_CREATE
+  handler: None
+
+- type: SUBSCRIPTION_UPDATE
+  handler: None
+
+- type: SUBSCRIPTION_DELETE
+  handler: None
+
+- type: TYPING_START
+  handler: None
+
+- type: USER_UPDATE
+  handler: None
+
+- type: VOICE_CHNNAEL_EFFECT_SEND
+  handler: None
+
+- type: VOICE_STATE_UPDATE
+  handler: None
+
+- type: VOICE_SERVER_UPDATE
+  handler: None
+
+- type: WEBHOOKS_UPDATE
+  handler: None
+
+- type: MESSAGE_POLL_VOTE_ADD
+  handler: None
+
+- type: MESSAGE_POLL_VOTE_REMOVE
+  handler: None
