@@ -1,5 +1,5 @@
-from model.bot.resources.guild import GuildMember
-from models.base import BaseResourceObject
+from src.models.bot.resources.user import GuildMember
+from src.models.base import BaseResourceObject
 
 __all__ = ['VoiceState']
 
@@ -24,7 +24,7 @@ class VoiceState(BaseResourceObject):
         self.guild_id                   = kwargs.get('guild_id', None)
         self.channel_id                 = kwargs.get('channel_id')
         self.user_id                    = kwargs.get('user_id')
-        self.member                     = GuildMember(**kwargs.get('member')) if 'member' in kwargs else None
+        self.member                     = GuildMember(**kwargs.get('member')) if 'member' in kwargs and kwargs['member'] is not None else None
         self.session_id                 = kwargs.get('session_id', None)
         self.deaf                       = kwargs.get('deaf', False)
         self.mute                       = kwargs.get('mute', False)

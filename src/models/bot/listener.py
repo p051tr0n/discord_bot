@@ -1,10 +1,10 @@
 from typing import List, Union, Dict, Generator, Any
 from typing_extensions import NotRequired, Self
 
-from models.base import Base
-from endpoints.message import ChannelMessage
+from src.models.base import Base
+from src.endpoints.message import ChannelMessage
 from tornado.httpclient import HTTPRequest
-from obj_types.proc_event import HttpEvent
+from src.obj_types.proc_event import HttpEvent
 
 
 __all__ = ['ListenerFilter', 'ListenerAction', 'ListenerObject']

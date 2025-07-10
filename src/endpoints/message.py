@@ -1,9 +1,9 @@
 import json
 import urllib.parse
 
-from endpoints.requestObj import RequestObject
-from models.bot.resources.message import MessageReference
-from obj_types.proc_event import HttpEvent
+from src.endpoints.requestObj import RequestObject
+from src.models.bot.resources.message import MessageReference
+from src.obj_types.proc_event import HttpEvent
 
 class ChannelMessage(RequestObject):
 

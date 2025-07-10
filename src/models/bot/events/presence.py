@@ -1,4 +1,4 @@
-from models.base import Base
+from src.models.base import Base
 
 class Presence(Base):
 
@@ -24,8 +24,6 @@ class Presence(Base):
             errLogMsg = self._create_error_message('Invalid Presence.', objs)
             raise ValueError('Invalid status value.')
         
-        super().__init__(**kwargs)
-
         self.since = kwargs.pop('since', None)
         self.activities = kwargs.pop('activities', None)
         self.status = kwargs.pop('status', None)

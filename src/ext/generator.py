@@ -1,12 +1,12 @@
 import json
 import config
 
-from models.bot.events.gateway_event import GatewayEvent
+from src.models.bot.events.gateway_event import GatewayEvent
 
 
-from models.bot.resources.auto_moderation import AutoModerationActionExecution, AutoModerationRule
-from models.bot.resources.entitlement import Entitlement
-from models.bot.resources.guild import (
+from src.models.bot.resources.auto_moderation import AutoModerationActionExecution, AutoModerationRule
+from src.models.bot.resources.entitlement import Entitlement
+from src.models.bot.resources.guild import (
     Guild,
     GuildCreate, 
     GuildAuditLogEntry, 
@@ -19,11 +19,11 @@ from models.bot.resources.guild import (
     GuildScheduledEventUser,
     GuildSoundboardSoundDelete,
     GuildSoundboardSounds)
-from models.bot.resources.channel import Channel, ThreadListSync, ThreadMember, ThreadMembersUpdate, ChannelPinsUpdate
-from models.bot.resources.soundboard import SoundboardSound
-from models.bot.resources.user import User, GuildMemberRemove, GuildMemberAdd
-from models.bot.resources.presence import Presence, Typing
-from models.bot.resources.message import *
+from src.models.bot.resources.channel import Channel, ThreadListSync, ThreadMember, ThreadMembersUpdate, ChannelPinsUpdate
+from src.models.bot.resources.soundboard import SoundboardSound
+from src.models.bot.resources.user import User, GuildMemberRemove, GuildMemberAdd
+from src.models.bot.resources.presence import Presence, Typing
+from src.models.bot.resources.message import *
 
 
 

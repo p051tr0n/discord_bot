@@ -12,16 +12,16 @@ from typing import (
 from typing_extensions import NotRequired
 import datetime
 
-from models.bot.resources.emoji import Emoji
+from src.models.bot.resources.emoji import Emoji
 
-from models.bot.resources.role import Role
+from src.models.bot.resources.role import Role
 
-from models.bot.resources.user import User, PartialGuildMember, GuildMember
-from models.bot.resources.channel import Channel
-from models.bot.resources.application import PartialApplication
-from models.base import BaseResourceObject
+from src.models.bot.resources.user import User, PartialGuildMember, GuildMember
+from src.models.bot.resources.channel import Channel
+from src.models.bot.resources.application import PartialApplication
+from src.models.base import BaseResourceObject
 
-from obj_types.resource_types.message import (
+from src.obj_types.resource_types.message import (
     Message,
     PartialMessage,
     MessageEmbed,
@@ -43,16 +43,16 @@ from obj_types.resource_types.message import (
     MessageRoleSubscription,
 )
 
-from obj_types.resource_types.user import User
-from obj_types.resource_types.snowflake import Snowflake
-from obj_types.resource_types.guild import PartialMember
-from obj_types.resource_types.components import Component
-from obj_types.resource_types.poll import Poll
-from obj_types.resource_types.channel import Channel, ChannelMention, ChannelTag
-from obj_types.resource_types.sticker import StickerItem, Sticker
-from obj_types.resource_types.emoji import Emoji, PartialEmoji
-from obj_types.resource_types.role import Role
-from obj_types.resource_types.components import Component
+from src.obj_types.resource_types.user import User
+from src.obj_types.resource_types.snowflake import Snowflake
+from src.obj_types.resource_types.guild import PartialMember
+from src.obj_types.resource_types.components import Component
+from src.obj_types.resource_types.poll import Poll
+from src.obj_types.resource_types.channel import Channel, ChannelMention, ChannelTag
+from src.obj_types.resource_types.sticker import StickerItem, Sticker
+from src.obj_types.resource_types.emoji import Emoji, PartialEmoji
+from src.obj_types.resource_types.role import Role
+from src.obj_types.resource_types.components import Component
 
 __all__ = ['PartialMessage', 
             'Message', 
@@ -103,13 +103,13 @@ class PartialMessage(BaseResourceObject):
     def __init__(self, **kwargs):
         self.type: int                              = kwargs.get('type', 0)
         self.content: str                           = kwargs.get('content', "")
-        self.embeds: List[MessageEmbed]             = [MessageEmbed(**x) for x in kwargs.get('embeds')] if 'embeds' in kwargs else list()
-        self.attachments: List[MessageAttachment]   = [MessageAttachment(**x) for x in kwargs.get('attachments')] if 'attachments' in kwargs else list()
+        self.embeds: List[MessageEmbed]             = [MessageEmbed(**x) for x in kwargs.get('embeds')] if 'embeds' in kwargs and kwargs['embeds'] is not None else list()
+        self.attachments: List[MessageAttachment]   = [MessageAttachment(**x) for x in kwargs.get('attachments')] if 'attachments' in kwargs and kwargs['attachments'] is not None else list()
         self.timestamp: str                         = kwargs.get('timestamp', "")
-        self.edited_timestamp: Optional[str]                  = kwargs.get('edited_timestamp', "")
+        self.edited_timestamp: Optional[str]        = kwargs.get('edited_timestamp', "")
         self.flags: int                             = kwargs.get('flags', 0)
-        self.mentions: List[User]                   = [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs else list()
-        self.mention_roles: List[Role]              = [Role(**x) for x in kwargs.get('mention_roles')] if 'mention_roles' in kwargs else list()
+        self.mentions: List[User]                   = [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs and kwargs['mentions'] is not None else list()
+        self.mention_roles: List[Role]              = [Role(**x) for x in kwargs.get('mention_roles')] if 'mention_roles' in kwargs and kwargs['mention_roles'] is not None else list()
         self.sitckers: List[Sticker]                = kwargs.get('stickers', None)
         self.sticker_items: List[StickerItem]       = kwargs.get('sticker_items', None)
         self.components: List[Component]            = kwargs.get('components', None)
@@ -159,37 +159,37 @@ class Message(BaseResourceObject):
     def __init__(self, **kwargs):
         self.id: Snowflake =                                                kwargs.get('id', "")
         self.channel_id: Snowflake =                                        kwargs.get('channel_id', "")
-        self.author: User =                                                 User(**kwargs.get('author', ""))
+        self.author: User =                                                 User(**kwargs.get('author', {}))
         self.content: str =                                                 kwargs.get('content', "")
         self.timestamp: str =                                               kwargs.get('timestamp', "")
         self.edited_timestamp: Optional[str] =                              kwargs.get('edited_timestamp', "")
         self.tts: bool =                                                    kwargs.get('tts', False)
         self.mention_everyone: bool =                                       kwargs.get('mention_everyone', False)
-        self.mentions: List[User] =                                         [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs else list()
+        self.mentions: List[User] =                                         [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs and kwargs['mentions'] is not None else list()
         self.mention_roles: List[Snowflake] =                               kwargs.get('mention_roles', list())
-        self.mention_channels: List[ChannelMention] =                       [ChannelMention(**x) for x in kwargs.get('mention_channels')] if 'mentionChannels' in kwargs else None
-        self.attachments: List[MessageAttachment] =                         [MessageAttachment(**x) for x in kwargs.get('attachments')] if 'attachments' in kwargs else list()
-        self.embeds: List[MessageEmbed] =                                   [MessageEmbed(**x) for x in kwargs.get('embeds')] if 'embeds' in kwargs else list()
-        self.reactions: List[Reaction] =                                    [Reaction(**x) for x in kwargs.get('reactions')] if 'reactions' in kwargs else None
+        self.mention_channels: List[ChannelMention] =                       [ChannelMention(**x) for x in kwargs.get('mention_channels')] if 'mention_channels' in kwargs and kwargs['mention_channels'] is not None else None
+        self.attachments: List[MessageAttachment] =                         [MessageAttachment(**x) for x in kwargs.get('attachments')] if 'attachments' in kwargs and kwargs['attachments'] is not None else list()
+        self.embeds: List[MessageEmbed] =                                   [MessageEmbed(**x) for x in kwargs.get('embeds')] if 'embeds' in kwargs and kwargs['embeds'] is not None else list()
+        self.reactions: List[Reaction] =                                    [Reaction(**x) for x in kwargs.get('reactions')] if 'reactions' in kwargs and kwargs['reactions'] is not None else None
         self.nonce: Optional[str] =                                         kwargs.get('nonce', None)
         self.pinned: bool =                                                 kwargs.get('pinned', False)
         self.webhook_id: Optional[Snowflake] =                              kwargs.get('webhook_id', None)
         self.type: int =                                                    kwargs.get('type', 0)
-        self.activity: Optional[MessageActivity] =                          MessageActivity(**kwargs.get('activity')) if 'activity' in kwargs else None
-        self.application: Optional[Dict] =                                  PartialApplication(**kwargs.get('application')) if 'application' in kwargs else None
+        self.activity: Optional[MessageActivity] =                          MessageActivity(**kwargs.get('activity')) if 'activity' in kwargs and kwargs['activity'] is not None else None
+        self.application: Optional[Dict] =                                  PartialApplication(**kwargs.get('application')) if 'application' in kwargs and kwargs['application'] is not None else None
         self.application_id: Optional[Snowflake] =                          kwargs.get('application_id', None)
         self.flags: Optional[int] =                                         kwargs.get('flags', None)
-        self.message_reference: Optional[MessageReference] =                MessageReference(**kwargs.get('message_reference')) if 'message_reference' in kwargs else None
+        self.message_reference: Optional[MessageReference] =                MessageReference(**kwargs.get('message_reference')) if 'message_reference' in kwargs and kwargs['message_reference'] is not None else None
         self.message_snapshots: Optional[List[PartialMessage]] =            kwargs.get('message_snapshots', None)
-        self.referenced_messages: Optional[Message] =                       Message(**kwargs.pop('referenced_messages')) if 'referenced_messages' in kwargs else False
+        self.referenced_messages: Optional[Message] =                       Message(**kwargs.pop('referenced_messages')) if 'referenced_messages' in kwargs and kwargs['referenced_messages'] is not None else False
         self.interaction_metadata: Optional[MessageInteractionMetadata] =   kwargs.get('interaction_metadata', None)
         self.interaction: Optional[MessageInteraction] =                    kwargs.get('interaction', None)
-        self.thread: Optional[Channel] =                                    Channel(**kwargs.get('thread')) if 'thread' in kwargs else None
+        self.thread: Optional[Channel] =                                    Channel(**kwargs.get('thread')) if 'thread' in kwargs and kwargs['thread'] is not None else None
         self.components: Optional[List[Component]] =                        kwargs.get('components', None)
-        self.sticker_items: Optional[List[StickerItem]] =                   [MessageStickerItem(**x) for x in kwargs.get('sticker_items')] if 'sticker_items' in kwargs else None
+        self.sticker_items: Optional[List[StickerItem]] =                   [MessageStickerItem(**x) for x in kwargs.get('sticker_items')] if 'sticker_items' in kwargs and kwargs['sticker_items'] is not None else None
         self.sticker: Optional[List[Sticker]] =                             kwargs.get('sticker', None)
         self.position: Optional[int] =                                      kwargs.get('position', None)
-        self.role_subscription_data: Optional[MessageRoleSubscription] =    MessageRoleSubscription(**kwargs.get('role_subscription_data')) if 'role_subscription_data' in kwargs else None
+        self.role_subscription_data: Optional[MessageRoleSubscription] =    MessageRoleSubscription(**kwargs.get('role_subscription_data')) if 'role_subscription_data' in kwargs and kwargs['role_subscription_data'] is not None else None
         self.resolved: Optional[Dict] =                                     kwargs.get('resolved', None)
         self.poll: Optional[Poll] =                                         kwargs.get('poll', None)
         self.call: Optional[MessageCall] =                                  kwargs.get('call', None)
@@ -200,9 +200,9 @@ class MessageCreate(Message):
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
-        self.guild_id: Snowflake = kwargs.get('guild_id', None)
-        self.member: PartialMember = PartialGuildMember(**kwargs.get('member')) if 'member' in kwargs else None
-        self.mentions: List[User] = [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs else list()
+        self.guild_id: Snowflake    = kwargs.get('guild_id', None)
+        self.member: PartialMember  = PartialGuildMember(**kwargs.get('member')) if 'member' in kwargs and kwargs['member'] is not None else None
+        self.mentions: List[User]   = [User(**x) for x in kwargs.get('mentions')] if 'mentions' in kwargs and kwargs['mentions'] is not None else list()
 
 #-----------------------------------------------------------------------------------------------------------------
 class MessageUpdate(MessageCreate):
@@ -287,13 +287,13 @@ class MessageEmbed(BaseResourceObject):
         self.url: Optional[str] =                           kwargs.get('url', None)
         self.timestamp: Optional[str] =                     kwargs.get('timestamp', None)
         self.color: Optional[int] =                         kwargs.get('color', None)
-        self.footer:Optional[MessageEmbedFooter] =          MessageEmbedFooter(**kwargs.get('footer')) if 'footer' in kwargs else None
-        self.image: Optional[MessageEmbedImage] =           MessageEmbedImage(**kwargs.get('image')) if 'image' in kwargs else None
-        self.thumbnail: Optional[MessageEmbedThumbnail]  =  MessageEmbedThumbnail(**kwargs.get('thumbnail')) if 'thumbnail' in kwargs else None
-        self.video: Optional[MessageEmbedVideo] =           MessageEmbedVideo(**kwargs.get('video')) if 'video' in kwargs else None
-        self.provider: Optional[MessageEmbedProvider] =     MessageEmbedProvider(**kwargs.get('provider')) if 'provider' in kwargs else None
-        self.author: Optional[MessageEmbedAuthor] =         MessageEmbedAuthor(**kwargs.get('author')) if 'author' in kwargs else None
-        self.fields: Optional[List[MessageEmbedField]] =    [MessageEmbedField(**x) for x in kwargs.get('fields')] if 'fields' in kwargs else None
+        self.footer:Optional[MessageEmbedFooter] =          MessageEmbedFooter(**kwargs.get('footer')) if 'footer' in kwargs and kwargs['footer'] is not None else None
+        self.image: Optional[MessageEmbedImage] =           MessageEmbedImage(**kwargs.get('image')) if 'image' in kwargs and kwargs['image'] is not None else None
+        self.thumbnail: Optional[MessageEmbedThumbnail]  =  MessageEmbedThumbnail(**kwargs.get('thumbnail')) if 'thumbnail' in kwargs and kwargs['thumbnail'] is not None else None
+        self.video: Optional[MessageEmbedVideo] =           MessageEmbedVideo(**kwargs.get('video')) if 'video' in kwargs and kwargs['video'] is not None else None
+        self.provider: Optional[MessageEmbedProvider] =     MessageEmbedProvider(**kwargs.get('provider')) if 'provider' in kwargs and kwargs['provider'] is not None else None
+        self.author: Optional[MessageEmbedAuthor] =         MessageEmbedAuthor(**kwargs.get('author')) if 'author' in kwargs and kwargs['author'] is not None else None
+        self.fields: Optional[List[MessageEmbedField]] =    [MessageEmbedField(**x) for x in kwargs.get('fields')] if 'fields' in kwargs and kwargs['fields'] is not None else None
 
         self.check_embed_limits()
 
@@ -327,8 +327,11 @@ class MessageEmbed(BaseResourceObject):
         counter = 0
         counter += len(self.title) if self.title is not None else 0
         counter += len(self.description) if self.description is not None else 0
-        for x in range(len(self.fields)):
-            counter += len(self.fields[x].name) + len(self.fields[x].value)
+
+        if self.fields is not None:
+            for x in range(len(self.fields)):
+                counter += len(self.fields[x].name) + len(self.fields[x].value)
+
         counter += len(self.footer.text) if isinstance(self.footer, MessageEmbedFooter) else 0
         counter += len(self.author.name) if isinstance(self.author, MessageEmbedAuthor) else 0
         if counter > 6000:
@@ -404,7 +407,7 @@ class Reaction(BaseResourceObject):
 
     def __init__(self, **kwargs):
         self.count: int =                           kwargs.get('count', 0)
-        self.count_details: ReactionCountDetails =  ReactionCountDetails(**kwargs.get('count_details')) if 'count_details' in kwargs else ReactionCountDetails()
+        self.count_details: ReactionCountDetails =  ReactionCountDetails(**kwargs.get('count_details')) if 'count_details' in kwargs and kwargs['count_details'] is not None else ReactionCountDetails()
         self.me: bool =                             kwargs.get('me', False)
         self.me_burst: bool =                       kwargs.get('me_burst', False)
         self.emoji: PartialEmoji =                  Emoji(**kwargs.get('emoji'))
@@ -514,11 +517,11 @@ class MessageReactionAdd(BaseResourceObject):
         self.channel_id: Snowflake                      = kwargs.get('channel_id')
         self.message_id: Snowflake                      = kwargs.get('message_id')
         self.guild_id: Optional[Snowflake]              = kwargs.get('guild_id', None)
-        self.member: Optional[GuildMember]              = GuildMember(**kwargs.get('member')) if 'member' in kwargs else None
+        self.member: Optional[GuildMember]              = GuildMember(**kwargs.get('member')) if 'member' in kwargs and kwargs['member'] is not None else None
         self.emoji: PartialEmoji                        = Emoji(**kwargs.get('emoji'))
         self.message_author_id: Optional[Snowflake]     = kwargs.get('message_author_id', None)
         self.burst: bool                                = kwargs.get('burst', False)
-        self.burst_colors: Optional[List[str]]          = kwargs.get('burst_colors', list()) if 'burst_colors' in kwargs else None
+        self.burst_colors: Optional[List[str]]          = kwargs.get('burst_colors', list()) if 'burst_colors' in kwargs and kwargs['burst_colors'] is not None else None
         self.type: int                                  = kwargs.get('type', 0)
 
 #-----------------------------------------------------------------------------------------------------------------

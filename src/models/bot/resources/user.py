@@ -1,7 +1,5 @@
-from typing import List
-from typing_extensions import Optional
 from enum import Enum
-from models.base import BaseResourceObject
+from src.models.base import BaseResourceObject
 
 
 __all__ = ['User', 'UserFlags', 'UserAvatarDecoration', 'GuildMember', 'GuildMemberAdd', 'GuildMemberRemove']
@@ -45,7 +43,7 @@ class User(BaseResourceObject):
         self.flags                  = kwargs.pop('flags', None)
         self.premium_type           = kwargs.pop('premium_type', None)
         self.public_flags           = kwargs.pop('public_flags', None)
-        self.avatar_decoration_data = UserAvatarDecoration(**kwargs.pop('avatar_decoration_data')) if 'avatar_decoration_data' in kwargs else None
+        self.avatar_decoration_data = UserAvatarDecoration(**kwargs.pop('avatar_decoration_data')) if 'avatar_decoration_data' in kwargs and kwargs['avatar_decoration_data'] is not None else None
 
 
 class PartialGuildMember(BaseResourceObject):
@@ -92,7 +90,7 @@ class GuildMember(PartialGuildMember):
         '''
             Represents the Guild Member Structure defined here: https://discord.com/developers/docs/resources/guild#guild-member-object
         '''
-        self.user = User(**kwargs.pop('user')) if 'user' in kwargs else None
+        self.user = User(**kwargs.pop('user')) if 'user' in kwargs and kwargs['user'] is not None else None
         self.nick = kwargs.pop('nick', None)
         self.roles = kwargs.pop('roles', [])
         self.joined_at = kwargs.pop('joined_at', None)
@@ -102,7 +100,7 @@ class GuildMember(PartialGuildMember):
         self.pending = kwargs.pop('pending', False)
         self.permissions = kwargs.pop('permissions', None)
         self.communication_disabled_until = kwargs.pop('communication_disabled_until', None)
-        self.avatar_decoration_data = UserAvatarDecoration(**kwargs.pop('avatar_decoration_data')) if 'avatar_decoration_data' in kwargs else None
+        self.avatar_decoration_data = UserAvatarDecoration(**kwargs.pop('avatar_decoration_data')) if 'avatar_decoration_data' in kwargs and kwargs['avatar_decoration_data'] is not None else None
 
 class GuildMemberAdd(GuildMember):
     __slots__ = ('guild_id')

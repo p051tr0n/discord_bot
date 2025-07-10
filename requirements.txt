@@ -1,8 +1,8 @@
 asyncio
 tornado
-discord.py
 pyyaml
 requests
 sqlalchemy
-twine
-build
+typing_extensions
+websockets
+pytest

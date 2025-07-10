@@ -1,5 +1,5 @@
-from models.base import BaseResourceObject
-from obj_types.resource_types.snowflake import Snowflake
+from src.models.base import BaseResourceObject
+from src.obj_types.resource_types.snowflake import Snowflake
 
 __all__ = ['Role', 'RoleTag']
 
@@ -28,6 +28,6 @@ class Role(BaseResourceObject):
         self.permissions    = kwargs.get('permissions', 0)
         self.managed        = kwargs.get('managed', False)
         self.mentionable    = kwargs.get('mentionable', False)
-        self.tags           = RoleTag(**kwargs.get('tags')) if 'tags' in kwargs else None
+        self.tags           = RoleTag(**kwargs.get('tags')) if 'tags' in kwargs and kwargs['tags'] is not None else None
         self.flags          = kwargs.get('flags', 0)
 

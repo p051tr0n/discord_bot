@@ -1,4 +1,4 @@
-from models.base import BaseResourceObject
+from src.models.base import BaseResourceObject
 
 __all__ = ['StageInstance']
 

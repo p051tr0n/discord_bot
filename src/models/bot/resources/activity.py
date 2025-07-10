@@ -1,14 +1,12 @@
 from typing import List
 from typing_extensions import Optional
 
-from models.bot.resources.emoji import Emoji
-
-
-from models.base import BaseResourceObject
+from src.models.base import BaseResourceObject
 
 
 __all__ = ['Activity', 'ActivityButton','ActivityEmoji', 'ActivityAssets', 'ActivityParty', 'ActivitySecrets', 'ActivityTimestamps']
 
+#-----------------------------------------------------------------------------------------------------------------
 class ActivityParty(BaseResourceObject):
     __slots__ = (
         'id',
@@ -100,14 +98,14 @@ class Activity(BaseResourceObject):
         self.type: int                                  = kwargs.get('type')
         self.url: Optional[str]                         = kwargs.get('url', None)
         self.created_at: int                            = kwargs.get('created_at')
-        self.timestamps: Optional[ActivityTimestamps]   = ActivityTimestamps(**kwargs.get('timestamps')) if 'timestamps' in kwargs else None
+        self.timestamps: Optional[ActivityTimestamps]   = ActivityTimestamps(**kwargs.get('timestamps')) if 'timestamps' in kwargs and kwargs['timestamps'] is not None else None
         self.application_id: Optional[str]              = kwargs.get('application_id', None)
         self.details: Optional[str]                     = kwargs.get('details', None)
         self.state: Optional[str]                       = kwargs.get('state', None)
-        self.emoji: Optional[ActivityEmoji]             = ActivityEmojiActivityEmoji(**kwargs.get('emoji')) if 'emoji' in kwargs else None
-        self.party: Optional[ActivityParty]             = ActivityParty(**kwargs.get('party')) if 'party' in kwargs else None
-        self.assets: Optional[ActivityAssets]           = ActivityAssets(**kwargs.get('assets')) if 'assets' in kwargs else None
-        self.secrets: Optional[ActivitySecrets]         = ActivitySecrets(**kwargs.get('secrets')) if 'secrets' in kwargs else None
+        self.emoji: Optional[ActivityEmoji]             = ActivityEmoji(**kwargs.get('emoji')) if 'emoji' in kwargs and kwargs['eomji'] is not None else None
+        self.party: Optional[ActivityParty]             = ActivityParty(**kwargs.get('party')) if 'party' in kwargs and kwargs['party'] is not None else None
+        self.assets: Optional[ActivityAssets]           = ActivityAssets(**kwargs.get('assets')) if 'assets' in kwargs and kwargs['assets'] is not None else None
+        self.secrets: Optional[ActivitySecrets]         = ActivitySecrets(**kwargs.get('secrets')) if 'secrets' in kwargs and kwargs['secrets'] is not None else None
         self.instance: Optional[bool]                   = kwargs.get('instance', None)
         self.flags: Optional[int]                       = kwargs.get('flags', None)
-        self.buttons: Optional[List[ActivityButton]]    = [ActivityButton(**x) for x in kwargs.get('buttons')] if 'buttons' in kwargs else None
+        self.buttons: Optional[List[ActivityButton]]    = [ActivityButton(**x) for x in kwargs.get('buttons')] if 'buttons' in kwargs and kwargs['button'] is not None else None

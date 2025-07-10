@@ -1,5 +1,5 @@
-from models.bot.resources.user import User
-from models.base import BaseResourceObject
+from src.models.bot.resources.user import User
+from src.models.base import BaseResourceObject
 
 __all__ = ['SoundboardSound']
 
@@ -23,5 +23,5 @@ class SoundboardSound(BaseResourceObject):
         self.emoji_name: str     = kwargs.get('emoji_name')
         self.guild_id: str       = kwargs.get('guild_id', None)
         self.available: bool     = kwargs.get('available')
-        self.user: User          = User(**kwargs.get('user')) if 'user' in kwargs else None
+        self.user: User          = User(**kwargs.get('user')) if 'user' in kwargs and kwargs['user'] is not None else None
 

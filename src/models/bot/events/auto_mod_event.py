@@ -1,6 +1,17 @@
-import config
 from enum import Enum
-from models.base import Base
+from src.models.base import Base
+
+class AutoModTrigger(Enum):
+    KEYWORD = 1
+    SPAM = 3
+    KEYWORD_PRESET = 4
+    MENTION_SPAM = 5
+    MEMBER_PROFILE = 6
+
+class AutoModKeywordPreset(Enum):
+    PROFANITY = 1
+    SEXUAL_CONTENT = 2
+    SLURS = 3
 
 TRIGGER_FIELD_LIMITS = {
     "keyword_filter": {
@@ -34,18 +45,7 @@ TRIGGER_FIELD_LIMITS = {
     }
 }
 
-class AutoModTrigger(Enum):
-    KEYWORD = 1
-    SPAM = 3
-    KEYWORD_PRESET = 4
-    MENTION_SPAM = 5
-    MEMBER_PROFILE = 6
-
-class AutoModKeywordPreset(Enum):
-    PROFANITY = 1
-    SEXUAL_CONTENT = 2
-    SLURS = 3
-
+#-----------------------------------------------------------------------------------------------------------------
 class AutoModActionObject(Base):
 
     def __init__(self, **kwargs):
@@ -74,7 +74,7 @@ class AutoModActionObject(Base):
         else:
             self.metadata = dict()
 
-
+#-----------------------------------------------------------------------------------------------------------------
 class AutoModRuleObject(Base):
 
     def __init__(self, **kwargs):

@@ -1,14 +1,15 @@
 
-from models.bot.resources.emoji import Emoji
-from models.bot.resources.role import Role
-from models.bot.events.presence import Presence
-from models.bot.resources.channel import Channel
-from models.bot.resources.stage import StageInstance
-from models.bot.resources.audit import AuditLogEntry
-from models.bot.resources.soundboard import SoundboardSound
-from models.bot.resources.user import User, UserAvatarDecoration, GuildMember
-from models.bot.resources.sticker import Sticker
-from models.base import BaseResourceObject
+from src.models.bot.resources.emoji import Emoji
+from src.models.bot.resources.role import Role
+from src.models.bot.resources.presence import Presence
+from src.models.bot.resources.channel import Channel
+from src.models.bot.resources.stage import StageInstance
+from src.models.bot.resources.audit import AuditLogEntry
+from src.models.bot.resources.soundboard import SoundboardSound
+from src.models.bot.resources.user import User, GuildMember
+from src.models.bot.resources.sticker import Sticker
+from src.models.bot.resources.voice import VoiceState
+from src.models.base import BaseResourceObject
 
 __all__ = ['Guild', 
             'PartialGuild',
@@ -61,10 +62,7 @@ class WelcomeScreenChannel(BaseResourceObject):
         self.emoji_id = kwargs.pop('emoji_id')
         self.emoji_name = kwargs.pop('emoji_name', None)
 
-
-
-
-
+#-----------------------------------------------------------------------------------------------------------------
 class GuildPreview(BaseResourceObject):
     __slots__ = ('id',
                     'name',
@@ -93,6 +91,7 @@ class GuildPreview(BaseResourceObject):
         self.description                = kwargs.get('description')
         self.stickers                   = [Sticker(**x) for x in kwargs.get('stickers')]
 
+#-----------------------------------------------------------------------------------------------------------------
 class Guild(GuildPreview):
     __slots__ = ('owner',
                     'owner_id',
@@ -169,13 +168,14 @@ class Guild(GuildPreview):
         self.max_stage_video_channel_users  = kwargs.get('max_stage_video_channel_users', None)
         self.approximate_member_count       = kwargs.get('approximate_member_count', None)
         self.approximate_presence_count     = kwargs.get('approximate_presence_count', None)
-        self.welcome_screen                 = WelcomeScreenChannel(**kwargs.get('welcome_screen')) if 'welcome_screen' in kwargs else None
+        self.welcome_screen                 = WelcomeScreenChannel(**kwargs.get('welcome_screen')) if 'welcome_screen' in kwargs and kwargs['welcome_screen'] is not None else None
         self.nsfw_level                     = kwargs.get('nsfw_level')
-        self.stickers                       = [Sticker(**x) for x in kwargs.get('stickers')] if 'stickers' in kwargs else None
+        self.stickers                       = [Sticker(**x) for x in kwargs.get('stickers')] if 'stickers' in kwargs and kwargs['stickers'] is not None else None
         self.premium_progress_bar_enabled   = kwargs.get('premium_progress_bar_enabled', False)
         self.safety_alerts_channel_id       = kwargs.get('safety_alerts_channel_id', None)
         self.incidents_data                 = IncidentData(**kwargs.get('incidents_data')) if 'incidents_data' in kwargs and kwargs['incidents_data'] is not None else None
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildCreate(Guild):
     __slots__ = (
                     'joined_at',
@@ -210,6 +210,7 @@ class GuildCreate(Guild):
         self.guild_scheduled_events = [GuildScheduledEvent(**x) for x in kwargs.get('guild_scheduled_events')]
         self.soundboard_sounds      = [SoundboardSound(**x) for x in kwargs.get('soundboard_sounds')]
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildAuditLogEntry(AuditLogEntry):
     __slots__ = ('guild_id')
     def __init__(self, **kwargs):
@@ -219,36 +220,42 @@ class GuildAuditLogEntry(AuditLogEntry):
         super().__init__(**kwargs)
         self.guild_id = kwargs.get('guild_id')
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildBan(BaseResourceObject):
     __slots__ = ('guild_id', 'user')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
         self.user = User(**kwargs.get('user'))
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildEmojis(BaseResourceObject):
     __slots__ = ('guild_id', 'emojis')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
-        self.emojis = [Emoji(**x) for x in kwargs.get('emojis')] if 'emojis' in kwargs else []
+        self.emojis = [Emoji(**x) for x in kwargs.get('emojis')] if 'emojis' in kwargs and kwargs['emojis'] is not None else []
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildStickers(BaseResourceObject):
     __slots__ = ('guild_id', 'stickers')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
-        self.stickers = [Sticker(**x) for x in kwargs.get('stickers')] if 'stickers' in kwargs else []
+        self.stickers = [Sticker(**x) for x in kwargs.get('stickers')] if 'stickers' in kwargs and kwargs['stickers'] is not None else []
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildRole(BaseResourceObject):
     __slots__ = ('guild_id', 'role')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
         self.role = Role(**kwargs.get('role'))
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildRoleDelete(BaseResourceObject):
     __slots__ = ('guild_id', 'role_id')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
         self.role_id = kwargs.get('role_id')
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildScheduledEvent(BaseResourceObject):
     __slots__ = (
                     'id',
@@ -283,11 +290,12 @@ class GuildScheduledEvent(BaseResourceObject):
         self.entity_type            = kwargs.get('entity_type')
         self.entity_id              = kwargs.get('entity_id')
         self.entity_metadata        = kwargs.get('entity_metadata')
-        self.creator                = User(**kwargs.get('creator')) if 'creator' in kwargs else None
+        self.creator                = User(**kwargs.get('creator')) if 'creator' in kwargs and kwargs['creator'] is not None else None
         self.user_count             = kwargs.get('user_count', None)
         self.image                  = kwargs.get('image', None)
         self.recurrence_rule        = kwargs.get('recurrence_rule')
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildScheduledEventUser(BaseResourceObject):
     __slots__ = ('id', 'user_id', 'scheduled_event_id')
     def __init__(self, **kwargs):
@@ -295,12 +303,14 @@ class GuildScheduledEventUser(BaseResourceObject):
         self.user_id            = kwargs.get('user_id')
         self.scheduled_event_id = kwargs.get('scheduled_event_id')
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildSoundboardSoundDelete(BaseResourceObject):
     __slots__ = ('guild_id', 'sound_id')
     def __init__(self, **kwargs):
         self.guild_id = kwargs.get('guild_id')
         self.sound_id = kwargs.get('sound_id')
 
+#-----------------------------------------------------------------------------------------------------------------
 class GuildSoundboardSounds(BaseResourceObject):
     __slots__ = ('guild_id', 'soundboard_sounds')
     def __init__(self, **kwargs):

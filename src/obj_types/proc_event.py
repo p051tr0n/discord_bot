@@ -1,6 +1,6 @@
 from typing import Literal, Optional, TypedDict, Dict
 from typing_extensions import NotRequired
-from models.base import BaseResourceObject
+from src.models.base import BaseResourceObject
 
 class BaseProcEvent(TypedDict):
     action: str

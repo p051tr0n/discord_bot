@@ -2,9 +2,9 @@ import yaml
 from yaml import Loader
 
 from typing import List, Generator
-from models.bot.listener import ListenerObject
-from endpoints.message import ChannelMessage
-from obj_types.proc_event import HttpEvent
+from src.models.bot.listener import ListenerObject
+from src.endpoints.message import ChannelMessage
+from src.obj_types.proc_event import HttpEvent
 
 class BotListeners(object):
     '''

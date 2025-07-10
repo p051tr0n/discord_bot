@@ -1,14 +1,40 @@
+from calendar import c
 from typing import List, Literal, Optional, TypedDict, Union, Dict
 from typing_extensions import NotRequired, Required, Self
 
 import yaml
 from yaml import Loader
-from models.base import Base
+from src.models.base import Base
 
 __all__ = ['ResponseCodes', 'HttpResponseCode', 'GatewayOpCode', 'GatewayCloseCode', 'VoiceOpCode', 'VoiceCloseCode', 'JsonCodes']
 
+class ClientCode(object):
+    __slots__ = ()
+    #-------------------------------------------------------------------------------
+    # This will need recursive functionality for nested objects.
+    #-------------------------------------------------------------------------------
+    def _to_dict(self):
+        dictObj = dict()
+
+        for key in self.__slots__:
+            obj = getattr(self, key)
+            if obj is None:
+                continue
+            dictObj[key] = self.traverse(obj)
+        return dictObj
+
+    #-------------------------------------------------------------------------------
+    def traverse(self, obj):
+        if isinstance(obj, Base):
+            return obj._to_dict()
+        if isinstance(obj, dict):
+            return {k: self.traverse(v) for k, v in obj.items()}
+        if isinstance(obj, list):
+            return [self.traverse(x) for x in obj]
+        return obj
+
 #-------------------------------------------------------------------------------------------
-class GatewayOpCode():
+class GatewayOpCode(ClientCode):
     __slots__ = ('code', 'name', 'action', 'description')
     def __init__(self, code=0, name='', action=0, description=''):
         self.code: int = code
@@ -17,7 +43,7 @@ class GatewayOpCode():
         self.description: str = description
 
 #-------------------------------------------------------------------------------------------
-class GatewayCloseCode():
+class GatewayCloseCode(ClientCode):
     __slots__ = ('code', 'description', 'explanation', 'reconnect')
     def __init__(self, code=0, description='', explanation='', reconnect=False):
         self.code: int = code
@@ -26,7 +52,7 @@ class GatewayCloseCode():
         self.reconnect: bool = reconnect
 
 #-------------------------------------------------------------------------------------------
-class VoiceOpCode():
+class VoiceOpCode(ClientCode):
     __slots__ = ('code', 'name', 'sentBy', 'description', 'binary')
     def __init__(self, code=0, name='', sentBy='', description='', binary=False):
         self.code: int = code
@@ -36,7 +62,7 @@ class VoiceOpCode():
         self.binary: bool = binary
 
 #-------------------------------------------------------------------------------------------
-class VoiceCloseCode():
+class VoiceCloseCode(ClientCode):
     __slots__ = ('code', 'description', 'explanation')
     def __init__(self, code=0, description='', explanation=''):
         self.code: int = code
@@ -44,7 +70,7 @@ class VoiceCloseCode():
         self.explanation: str = explanation
 
 #-------------------------------------------------------------------------------------------
-class HttpResponseCode():
+class HttpResponseCode(ClientCode):
     __slots__ = ('code', 'name', 'meaning')
     def __init__(self, code=0, name='', meaning=''):
         self.code: int = code
@@ -52,12 +78,15 @@ class HttpResponseCode():
         self.meaning: str = meaning
 
 #-------------------------------------------------------------------------------------------
-class JsonCodes():
+class JsonCodes(ClientCode):
     __slots__ = ('code', 'meaning')
     def __init__(self, code=0, meaning=''):
         self.code: int = code
         self.meaning: str = meaning
 
+#-------------------------------------------------------------------------------------------
+# Base class for response codes
+# This class is used to initialize and store various response codes used in the application.
 #-------------------------------------------------------------------------------------------
 class ResponseCodes(Base):
     __slots__ = ('http_codes', 'gateway_op_codes', 'gateway_close_codes', 'voice_op_codes', 'voice_close_codes', 'json_codes')
@@ -136,6 +165,3 @@ class ResponseCodes(Base):
                     jsonCodes[code['code']] = JsonCodes(**code)
         return jsonCodes
 
-    def get_op_obj(self, type, code) -> Union[GatewayOpCode, VoiceOpCode]:
-        codes = self._to_dict()
-        return codes[type][code]

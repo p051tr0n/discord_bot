@@ -1,9 +1,8 @@
 import config
-from models.base import Base
-from models.bot.user import User
-from models.bot.guild import PartialGuild
-from models.bot.application import PartialApplication
-from models.bot.events.gateway_event import GatewayEvent
+from src.models.bot.resources.user import User
+from src.models.bot.resources.guild import PartialGuild
+from src.models.bot.resources.application import PartialApplication
+from src.models.bot.events.gateway_event import GatewayEvent
 
 class Hello(GatewayEvent):
     def __init__(self, **kwargs):
@@ -16,7 +15,6 @@ class Hello(GatewayEvent):
         super().__init__(config.RESPONSE_CODES.gateway_op_codes['Hello'], None, None, **kwargs)
         self.heartbeat_interval = kwargs.pop('heartbeat_interval', 0)
 
-#--------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------
 class Ready(GatewayEvent):
     def __init__(self, **kwargs):
@@ -43,7 +41,6 @@ class Ready(GatewayEvent):
         self.application = PartialApplication(**kwargs.pop('application', dict()))
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class Resumed(GatewayEvent):
     def __init__(self, **kwargs):
         '''
@@ -63,7 +60,6 @@ class Reconnect(GatewayEvent):
                         None,
                         **kwargs)
 
-#--------------------------------------------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------------------------------------------
 class InvalidSession(GatewayEvent):
     def __init__(self, **kwargs):

@@ -1,5 +1,5 @@
-from models.base import BaseResourceObject
-from obj_types.resource_types.snowflake import Snowflake
+from src.models.base import BaseResourceObject
+from src.obj_types.resource_types.snowflake import Snowflake
 
 class PartialApplication(BaseResourceObject):
     __slots__ = ('id', 'flags')

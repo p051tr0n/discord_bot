@@ -1,8 +1,8 @@
 from typing import List
 from typing_extensions import Optional
 
-from obj_types.resource_types.snowflake import Snowflake
-from models.base import BaseResourceObject
+from src.obj_types.resource_types.snowflake import Snowflake
+from src.models.base import BaseResourceObject
 
 __all__ = ['Entitlement']
 

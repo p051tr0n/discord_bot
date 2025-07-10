@@ -2,6 +2,20 @@ import copy
 import yaml
 import json
 
+# class Serializable(object):
+#     """
+#     A mixin class that provides methods for serializing and deserializing objects
+#     to and from dictionaries, JSON, and YAML formats.
+#     """
+#     __slots__ = ()
+#     def _to_dict(self):
+#         """
+#         Convert the object to a dictionary representation.
+#         """
+#         raise NotImplementedError("Subclasses must implement this method.")
+#     def _from_dict(cls, d):
+
+
 class Base(object):
     __slots__ = ()
     
@@ -15,7 +29,7 @@ class Base(object):
     #-------------------------------------------------------------------------------
     # This will need recursive functionality for nested objects.
     #-------------------------------------------------------------------------------
-    def _to_dict(self): 
+    def _to_dict(self):
         dictObj = dict()
         
         for key in self.__slots__:

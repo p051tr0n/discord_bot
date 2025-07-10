@@ -1,9 +1,8 @@
 import config
 
-from models.procs.event import LogEvent, ProcessEvent, HttpEvent
-
-from obj_types.events import GatewayEvent
-from models.base import BaseResourceObject
+from src.models.procs.event import LogEvent, ProcessEvent, HttpEvent
+from src.obj_types.events import GatewayEvent
+from src.models.base import BaseResourceObject
 
 __all__ = ['EventHandler']
 

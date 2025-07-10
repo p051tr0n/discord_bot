@@ -1,4 +1,4 @@
-from models.base import Base, BaseResourceObject
+from src.models.base import Base, BaseResourceObject
 
 __all__ = ['ProcessEvent', 'LogEvent', 'HttpEvent']
 

@@ -10,7 +10,7 @@ from typing import (
     Literal
 )
 
-from obj_types.resource_types.snowflake import Snowflake
+from src.obj_types.resource_types.snowflake import Snowflake
 
 class GatewayEvent(TypedDict):
     op: int

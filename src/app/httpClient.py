@@ -6,8 +6,8 @@ import time
 from tornado.httpclient import AsyncHTTPClient, HTTPRequest, HTTPClientError
 
 from multiprocessing import Process, JoinableQueue
-from models.procs.event import ProcessEvent, LogEvent
-from functions.botListeners import BotListeners
+from src.models.procs.event import ProcessEvent, LogEvent
+from src.ext.botListeners import BotListeners
 
 __all__ = ['HttpClient', 'RequestClient']
 
@@ -43,7 +43,7 @@ class HttpClient(Process):
             try:
                 evnt = self.httpQueue.get_nowait()
                 self.httpQueue.task_done()
-            
+
             except queue.Empty:
                 procCheck = self.checkRequestProcess(requestProc)
                 if procCheck is not None:

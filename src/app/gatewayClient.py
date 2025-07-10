@@ -1,5 +1,4 @@
 import asyncio
-import json
 import websockets
 import time
 import config
@@ -7,9 +6,9 @@ import queue
 
 from multiprocessing import Process, JoinableQueue
 
-from functions.events.generator import EventGenerator
-from functions.events.handler import EventHandler
-from models.procs.event import ProcessEvent, LogEvent
+from src.ext.generator import EventGenerator
+from src.ext.handler import EventHandler
+from src.models.procs.event import ProcessEvent, LogEvent
 
 
 
@@ -23,9 +22,9 @@ class ReconnectWebSocket(Exception):
     __slots__ = ('resume', 'shard_id', 'op')
 
     def __init__(self, shard_id = None, resume = True) -> None:
-        self.shard_id = shard_id
-        self.resume = resume
-        self.op = 'RESUME' if resume else 'IDENTIFY'
+        self.shard_id   = shard_id
+        self.resume     = resume
+        self.op         = 'RESUME' if resume else 'IDENTIFY'
 
 #-----------------------------------------------------------------------------------------------------------
 # NOTE: This class should be reworked.  There is probably no need to have it split into two processes.
@@ -123,7 +122,6 @@ class GatewayListener():
             Gateway API Websocket
         '''
         asyncio.run(self.socketClient())
-        asyncio.close()
 
     #-------------------------------------------------------------------------------------------
     # Main loop for the bot
@@ -179,17 +177,23 @@ class GatewayListener():
             #   process.
             #----------------------------------------
             except websockets.exceptions.ConnectionClosed as e:
-                closeCode = config.RESPONSE_CODES.get_op_obj('gateway_close_codes', e.code)
+                if e.code in config.RESPONSE_CODES.gateway_close_codes:
+                    closeCode = config.RESPONSE_CODES.gateway_close_codes[e.code]
+                else:
+                    self.logQueue.put_nowait(LogEvent(action="LOG", level="ERROR", message=f"Websocket Connection Closed, code: {e.code}, which isnt in the known error codes."))
+                    self.logQueue.put_nowait(LogEvent(action="LOG", level="ERROR", message="Killing Gateway Client due to unknown ConnectionClosed code"))
+                    return
+
                 self.logQueue.put_nowait(LogEvent(action="LOG", level="INFO", message=f"Connection Close Frame was sent: {closeCode._to_dict()}"))
                 if closeCode.reconnect:
-                    
-                    if closeCode.code in [4001,4002,4008]:
+
+                    if closeCode.code in [4001,4002,4008,1006]:
                         await self.resume()
-                    
+
                     if closeCode.code in [4000, 4009]:
                         self.websocket = None
                         await asyncio.sleep(5)
-                    
+
                     if closeCode.code in [4003, 4004, 4010, 4011, 4012, 4013, 4014]:
                         self.logQueue.put_nowait(LogEvent(action="LOG", level="INFO", message="Problem bad, shouldnt reconnect"))
                         return
@@ -216,13 +220,16 @@ class GatewayListener():
             t -> The event name
         '''
         async for message in self.websocket:
-
             #----------------------------------------
             #   Get the incoming message from the 
             #   async generator and create a 
             # GatewayEvent object from it.
             #----------------------------------------
             evnt = EventGenerator.incoming_event(message)
+
+            if evnt is None:
+                self.logQueue.put_nowait(LogEvent(action="LOG", level="ERROR", message="Received None from incoming_event"))
+                continue
 
             # for debugging
             self.logQueue.put_nowait(LogEvent(action="LOG", level="INFO", message=evnt._to_dict()))
@@ -232,7 +239,7 @@ class GatewayListener():
             #   config module.
             #----------------------------------------
             try:
-                opCode = config.RESPONSE_CODES.get_op_obj('gateway_op_codes', evnt.op)
+                opCode = config.RESPONSE_CODES.gateway_op_codes[evnt.op]
 
             except KeyError:
                 self.logQueue.put_nowait(LogEvent(action="LOG", level="ERROR", message="Unknown OpCode"))
@@ -243,8 +250,8 @@ class GatewayListener():
             #   Heartbeat Event
             #----------------------------------------
             if opCode.name == "Heartbeat":
-                evnt = EventGenerator.heartbeat_event(self.sequence)
-                await self.websocket.send(evnt._to_payload())
+                heart_event = EventGenerator.heartbeat_event(self.sequence)
+                await self.websocket.send(heart_event._to_payload())
 
             #----------------------------------------
             #   InvalidSession Event

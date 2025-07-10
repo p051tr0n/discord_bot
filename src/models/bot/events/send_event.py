@@ -1,24 +1,24 @@
 import config
 from typing import Any
-from models.base import Base
-from models.bot.events.gateway_event import GatewayEvent
-from models.bot.events.presence import Presence
-from models.bot.activities.activity import Activity
+from src.models.base import Base
+from src.models.bot.events.gateway_event import GatewayEvent
+from src.models.bot.events.presence import Presence
+from src.models.bot.resources.activity import Activity
 
 class ConnectionProperties(Base):
 
-    def __init__(self, **kwargs: Any) -> ConnectionProperties:
+    def __init__(self, **kwargs: Any):
         super().__init__(**kwargs)    
         self.os = kwargs.pop('os', 'linux')
         self.browser = kwargs.pop('browser', 'squirrel_bot')
         self.device = kwargs.pop('device', 'squirrel_bot')
-#--------------------------------------------------------------------------------------------------------------------
+
 #--------------------------------------------------------------------------------------------------------------------
 class IdentifyEvent(GatewayEvent):
     '''
         Represents the Identify Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#identify-identify-structure
     '''
-    def __init__(self, **kwargs: Any) -> IdentifyEvent:
+    def __init__(self, **kwargs: Any):
         '''
             token: str
                 The authentication token.
@@ -59,11 +59,11 @@ class IdentifyEvent(GatewayEvent):
         
         self.token = kwargs.pop('token', config.OPTS['botToken'])
         self.intents = kwargs.pop('intents', 0)
-        self.properties = ConnectionProperties.(**kwargs.pop('properties', dict()))
+        self.properties = ConnectionProperties(**kwargs.pop('properties', dict()))
         self.compress = kwargs.pop('compress', False)
         self.large_threshold = kwargs.pop('large_threshold', 50)
         self.shard = kwargs.pop('shard', None)
-        self.presence = Presence.(**kwargs.pop('presence', dict()))
+        self.presence = Presence(**kwargs.pop('presence', dict()))
         self.heartbeat_interval = kwargs.pop('heartbeat_interval', None)
 
     #-------------------------------------------------------------------------------
@@ -80,12 +80,17 @@ class IdentifyEvent(GatewayEvent):
         return True
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class ResumeEvent(GatewayEvent):
     '''
         Represents the Resume Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#resume-resume-structure
     '''
-    def __init__(self, **kwargs: Any) -> ResumeEvent:
+    __slots__ = (
+        'token',
+        'session_id',
+        'seq'
+    )
+
+    def __init__(self, **kwargs: Any):
         '''
             token: str
                 The authentication token.
@@ -96,7 +101,7 @@ class ResumeEvent(GatewayEvent):
             seq: int
                 The last sequence number received.
         '''
-        if not self.checekValidResumeEvent(token, session_id, seq):
+        if not self.checekValidResumeEvent(**kwargs):
             #TODO: Log this error object
             objs = {k: v for k, v in kwargs.items()}
             errLogMsg = self._create_error_message('Invalid Resume Event.', objs)
@@ -107,6 +112,7 @@ class ResumeEvent(GatewayEvent):
         self.token = kwargs.pop('token', config.OPTS['botToken'])
         self.session_id = kwargs.pop('session_id', None)
         self.seq = kwargs.pop('seq', None)
+        
 
     #-------------------------------------------------------------------------------
     def checekValidResumeEvent(self, **kwargs) -> bool:
@@ -121,12 +127,11 @@ class ResumeEvent(GatewayEvent):
         return True
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class HeartbeatEvent(GatewayEvent):
     '''
         Represents the Heartbeat Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#heartbeat-heartbeat-structure
     '''
-    def __init__(self,**kwargs) -> HeartbeatEvent:
+    def __init__(self,**kwargs):
         '''
             seq: int
                 The last sequence number received.
@@ -137,12 +142,11 @@ class HeartbeatEvent(GatewayEvent):
         self.seq = kwargs.pop('seq', None)
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class RequestGuildMemberEvent(GatewayEvent):
     '''
         Represents the Request Guild Members Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#request-guild-members-guild-request-members-structure
     '''
-    def __init__(self, **kwargs) -> RequestGuildMemberEvent:
+    def __init__(self, **kwargs):
         '''
             guild_id: str
                 The id of the guild.
@@ -194,12 +198,11 @@ class RequestGuildMemberEvent(GatewayEvent):
         return True
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class UpdateVoiceStateEvent(GatewayEvent):
     '''
         Represents the Update Voice State Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#update-voice-state-voice-state-update-structure
     '''
-    def __init__(self, **kwargs) -> UpdateVoiceStateEvent:
+    def __init__(self, **kwargs):
         '''
             guild_id: str
                 The id of the guild.
@@ -213,7 +216,7 @@ class UpdateVoiceStateEvent(GatewayEvent):
             self_deaf: bool
                 Whether the client is deafened.
         '''
-        if not self.checekValidUpdateVoiceStateEvent(guild_id, channel_id):
+        if not self.checekValidUpdateVoiceStateEvent(**kwargs):
             #TODO: Log this error object
             objs = {k: v for k, v in kwargs.items()}
             errLogMsg = self._create_error_message('Invalid UpdateVoiceState Event.', objs)
@@ -238,12 +241,11 @@ class UpdateVoiceStateEvent(GatewayEvent):
         return True
 
 #--------------------------------------------------------------------------------------------------------------------
-#--------------------------------------------------------------------------------------------------------------------
 class UpdateStatusEvent(GatewayEvent):
     '''
         Represents the Update Status Payload Structure defined here: https://discord.com/developers/docs/topics/gateway#update-status-status-update-structure
     '''
-    def __init__(self, **kwargs) -> UpdateStatusEvent:
+    def __init__(self, **kwargs):
         '''
             since: int
                 Unix time (in milliseconds) of when the client went idle, or null if the client is not idle.

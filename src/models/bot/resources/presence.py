@@ -1,7 +1,7 @@
 
-from models.bot.resources.user import User, GuildMember
-from models.bot.resources.activity import Activity
-from models.base import BaseResourceObject
+from src.models.bot.resources.user import User, GuildMember
+from src.models.bot.resources.activity import Activity
+from src.models.base import BaseResourceObject
 
 from typing import List, Optional
 
@@ -31,7 +31,7 @@ class Presence(BaseResourceObject):
         self.user: User                     = User(**kwargs.get('user'))
         self.guild_id: str                  = kwargs.get('guild_id')
         self.status: str                    = kwargs.get('status')
-        self.activities: List[Activity]     = [Activity(**x) for x in kwargs.get('activities')] if 'activities' in kwargs else []
+        self.activities: List[Activity]     = [Activity(**x) for x in kwargs.get('activities')] if 'activities' in kwargs and kwargs['activities'] is not None else []
         self.client_status: ClientStatus    = ClientStatus(**kwargs.get('client_status'))
 
 class Typing(BaseResourceObject):
@@ -48,4 +48,4 @@ class Typing(BaseResourceObject):
         self.timestamp: int                 = kwargs.get('timestamp')
         self.guild_id: Optional[str]        = kwargs.get('guild_id', None)
         self.channel_id: str                = kwargs.get('channel_id')
-        self.member: Optional[GuildMember]  = GuildMember(**kwargs.get('member')) if 'member' in kwargs else None
+        self.member: Optional[GuildMember]  = GuildMember(**kwargs.get('member')) if 'member' in kwargs and kwargs['member'] is not None else None

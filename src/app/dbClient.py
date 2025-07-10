@@ -1,7 +1,7 @@
 import config
 import queue
 from multiprocessing import Process, JoinableQueue
-from models.procs.event import ProcessEvent, LogEvent
+from src.models.procs.event import ProcessEvent, LogEvent
 
 #config._prepare_config()
 

@@ -1,6 +1,6 @@
 from typing import List, Optional
-from models.base import BaseResourceObject
-from obj_types.resource_types.snowflake import Snowflake
+from src.models.base import BaseResourceObject
+from src.obj_types.resource_types.snowflake import Snowflake
 
 
 __all__ = ['AutoModerationRule',
@@ -22,7 +22,7 @@ class AutoModerationAction(BaseResourceObject):
     __slots__ = ('type', 'metadata')
     def __init__(self, **kwargs):
         self.type: int = kwargs.get('type')
-        self.metadata: Optional[AutoModerationActionMetadata] = AutoModerationActionMetadata(**kwargs.get('metadata', {})) if 'metadata' in kwargs else None
+        self.metadata: Optional[AutoModerationActionMetadata] = AutoModerationActionMetadata(**kwargs.get('metadata', {})) if 'metadata' in kwargs and kwargs['metadata'] is not None else None
 
 #-------------------------------------------------------------------------------------------
 class AutoModerationTriggerMetadata(BaseResourceObject):
@@ -63,8 +63,8 @@ class AutoModerationRule(BaseResourceObject):
         self.creator_id: Snowflake                              = kwargs.get('creator_id', "")
         self.event_type: int                                    = kwargs.get('event_type', "")
         self.trigger_type: int                                  = kwargs.get('trigger_type', "")
-        self.trigger_metadata: AutoModerationTriggerMetadata    = AutoModerationTriggerMetadata(**kwargs.get('trigger_metadata')) if 'trigger_metadata' in kwargs else AutoModerationTriggerMetadata()
-        self.actions: List[AutoModerationAction]                = [AutoModerationAction(**x) for x in kwargs.get('actions')] if 'actions' in kwargs else []
+        self.trigger_metadata: AutoModerationTriggerMetadata    = AutoModerationTriggerMetadata(**kwargs.get('trigger_metadata')) if 'trigger_metadata' in kwargs and kwargs['trigger_metadata'] is not None else AutoModerationTriggerMetadata()
+        self.actions: List[AutoModerationAction]                = [AutoModerationAction(**x) for x in kwargs.get('actions')] if 'actions' in kwargs and kwargs['actions'] is not None else []
         self.enabled: bool                                      = kwargs.get('enabled', False)
         self.exempt_roles: List[Snowflake]                      = kwargs.get('exempt_roles', [])
         self.exempt_channels: List[Snowflake]                   = kwargs.get('exempt_channels', [])

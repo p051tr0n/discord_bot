@@ -1,17 +1,17 @@
 import yaml
 from yaml import Loader
-from models.bot.res_codes import ResponseCodes
+from src.models.bot.res_codes import ResponseCodes
 
 # on import this file is executed, so the RESPONSE_CODES object is created and populated
 OPTS = {
-                'appId': int,
-                'permissionInteger': int,
-                'botToken': str,
-                'commandPrefix': str,
-                'logFile': str,
-                'logLevel': str,
-                'logMaxBytes': int
-            }
+            'appId': int,
+            'permissionInteger': int,
+            'botToken': str,
+            'commandPrefix': str,
+            'logFile': str,
+            'logLevel': str,
+            'logMaxBytes': int
+        }
 
 RESPONSE_CODES = ResponseCodes()
 MESSAGE_TYPES = dict()
@@ -23,7 +23,8 @@ def _prepare_config():
     #-----------------------------------------------------------
     #   Load main config file
     #-----------------------------------------------------------
-    with open('/etc/squirrel_bot/config.yaml','r+') as c_file:
+    #with open('/etc/squirrel_bot/config.yaml','r+') as c_file:
+    with open('config/conf.yaml','r+') as c_file:
         config_opts = yaml.load(c_file, Loader=Loader)
 
         if isinstance(config_opts, dict):
@@ -33,7 +34,7 @@ def _prepare_config():
                 else:
                     continue
         else:
-            print("Invalid config file: ../conf.yaml")
+            print("Invalid config file: config/conf.yaml")
             return
     
     #-----------------------------------------------------------

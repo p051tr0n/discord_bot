@@ -1,10 +1,8 @@
-import json
 import logging
 import logging.handlers
-import sys
 import config
-from multiprocessing import Process, Queue
-from models.procs.event import ProcessEvent
+from multiprocessing import Process, JoinableQueue
+from src.models.procs.event import ProcessEvent
 
 #config._prepare_config()
 
@@ -46,6 +44,9 @@ class LoggerClient(Process):
 
     #-------------------------------------------------------------------------------------------
     def create_logger(self):
+        '''
+        
+        '''
         self.logger = logging.getLogger('squirrel_bot')
         self.logger.setLevel(logging.DEBUG)
         handler = logging.handlers.RotatingFileHandler(filename=config.OPTS['logFile'],
@@ -58,6 +59,10 @@ class LoggerClient(Process):
 
     #-------------------------------------------------------------------------------------------
     def writeLog(self, log):
+        '''
+            Write the log message to the logger based on the log level.
+            log -> LogEvent object containing the log message and level.
+        '''
         if log.level == "DEBUG":
             self.logger.debug(log.message)
         elif log.level == "INFO":

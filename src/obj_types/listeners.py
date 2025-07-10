@@ -1,5 +1,5 @@
 from typing import Dict, List, Optional, TypedDict, Union, Any
-from .events import GatewayEvent
+from src.obj_types.events import GatewayEvent
 
 class ListenerFilter(TypedDict):
     condition: str

@@ -1,9 +1,10 @@
 from typing import List
 from typing_extensions import Optional
-from models.base import BaseResourceObject
+from src.models.base import BaseResourceObject
 
 __all__ = ['AuditLogChange', 'OptionalAuditLogEntry', 'AuditLogEntry']
 
+#-----------------------------------------------------------------------------------------------------------------
 class AuditLogChange(BaseResourceObject):
     __slots__ = (
                     'key',
@@ -16,6 +17,7 @@ class AuditLogChange(BaseResourceObject):
         self.old_value      = kwargs.get('old_value', None)
         self.new_value      = kwargs.get('new_value', None)
 
+#-----------------------------------------------------------------------------------------------------------------
 class OptionalAuditLogEntry(BaseResourceObject):
     __slots__ = (
                     'application_id',
@@ -45,6 +47,7 @@ class OptionalAuditLogEntry(BaseResourceObject):
         self.type: int                          = kwargs.get('type')
         self.integration_type: str              = kwargs.get('integration_type')
 
+#-----------------------------------------------------------------------------------------------------------------
 class AuditLogEntry(BaseResourceObject):
     __slots__ = (
                     'target_id',
@@ -58,9 +61,9 @@ class AuditLogEntry(BaseResourceObject):
     
     def __init__(self, **kwargs):
         self.target_id: str                             = kwargs.get('target_id')
-        self.changes: Opotional[List[AuditLogChange]]   = [AuditLogChange(**x) for x in kwargs.get('changes')] if 'changes' in kwargs else None
+        self.changes: Optional[List[AuditLogChange]]   = [AuditLogChange(**x) for x in kwargs.get('changes')] if 'changes' in kwargs and kwargs['changes'] is not None else None
         self.user_id: str                               = kwargs.get('user_id')
         self.id: str                                    = kwargs.get('id')
         self.action_type: int                           = kwargs.get('action_type')
-        self.options: Optional[AuditLogEntry]           = OptionalAuditLogEntry(**kwargs.get('options')) if 'options' in kwargs else None
-        self.reason: Opotional[str]                     = kwargs.get('reason', None)
+        self.options: Optional[AuditLogEntry]           = OptionalAuditLogEntry(**kwargs.get('options')) if 'options' in kwargs and kwargs['options'] is not None else None
+        self.reason: Optional[str]                     = kwargs.get('reason', None)

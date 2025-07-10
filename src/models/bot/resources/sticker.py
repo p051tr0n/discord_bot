@@ -1,8 +1,8 @@
 from typing import List
 from typing_extensions import Optional
 
-from models.bot.resources.user import User
-from models.base import BaseResourceObject
+from src.models.bot.resources.user import User
+from src.models.base import BaseResourceObject
 
 
 __all__ = ['Sticker']
@@ -32,5 +32,5 @@ class Sticker(BaseResourceObject):
         self.format_type: int           = kwargs.get('format_type')
         self.available: Optional[bool]  = kwargs.get('available', None)
         self.guild_id: Optional[str]    = kwargs.get('guild_id', None)
-        self.user: Optional[User]       = User(**kwargs.get('user')) if 'user' in kwargs else None
+        self.user: Optional[User]       = User(**kwargs.get('user')) if 'user' in kwargs and kwargs['user'] is not None else None
         self.sort_value: Optional[int]  = kwargs.get('sort_value', None)

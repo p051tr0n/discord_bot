@@ -4,11 +4,11 @@ import queue
 from typing import Dict
 
 from multiprocessing import Process, JoinableQueue
-from app.gatewayClient import GatewayClient
-from app.loggerClient import LoggerClient
-from app.httpClient import HttpClient
-from app.dbClient import DBClient
-from models.procs.event import ProcessEvent
+from src.app.gatewayClient import GatewayClient
+from src.app.loggerClient import LoggerClient
+from src.app.httpClient import HttpClient
+from src.app.dbClient import DBClient
+from src.models.procs.event import ProcessEvent
 
 config._prepare_config()
 
@@ -23,6 +23,10 @@ class BotClient():
 
     #-------------------------------------------------------------------------------------------
     def start(self) -> None:
+        '''
+            Start the bot client.
+            This method initializes the bot client, starts the necessary processes, and manages the event loop.
+        '''
         self.initializeBotClient()
 
         while True:
@@ -39,9 +43,9 @@ class BotClient():
             if procEvent.action == "GATEWAY_ERROR":
                 self.uninitializedBotClient()
                 self.initializeBotClient()
-        
+
         self.uninitializedBotClient()
-        
+
     #-------------------------------------------------------------------------------------------
     def stop(self) -> None:
         for procName, procObj in self.processes.items():
@@ -63,7 +67,7 @@ class BotClient():
                 procObj['proc'].join()
                 procObj['proc'] = None
                 procObj['status'] = 'stopped'
-        
+
     #-------------------------------------------------------------------------------------------
     def initializeBotClient(self) -> None:
         self.queues = {
@@ -84,7 +88,7 @@ class BotClient():
                 procObj['proc'].start()
                 procObj['status'] = 'running'
                 print(f"Started {procName} process - pid {procObj['proc'].pid}")
-    
+
     #-------------------------------------------------------------------------------------------
     def manageProcs(self) -> None:
         for procName, procObj in self.processes.items():
