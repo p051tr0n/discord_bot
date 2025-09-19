@@ -50,10 +50,12 @@
   handler: None
 
 - type: GUILD_CREATE
-  handler: None
+  handler: 
+    - DB
 
 - type: GUILD_UPDATE
-  handler: None
+  handler: 
+    - DB
 
 - type: GUILD_DELETE
   handler: None
@@ -148,6 +150,7 @@
 - type: MESSAGE_CREATE
   handler:
     - HTTP
+    - DB
 
 - type: MESSAGE_UPDATE
   handler: None
@@ -195,7 +198,8 @@
   handler: None
 
 - type: USER_UPDATE
-  handler: None
+  handler:
+    - DB
 
 - type: VOICE_CHNNAEL_EFFECT_SEND
   handler: None

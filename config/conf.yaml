@@ -1,8 +1,0 @@
-appId: '{APP_ID}'
-permissionInteger: {PERMISSION_INTEGER}
-
-botToken: "{BOT_TOKEN}"
-commandPrefix: '!'
-logFile: '/var/log/squirrel_bot/output.log'
-logLevel: 'DEBUG'
-logMaxBytes: 1000000

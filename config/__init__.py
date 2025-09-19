@@ -8,9 +8,10 @@ OPTS = {
             'permissionInteger': int,
             'botToken': str,
             'commandPrefix': str,
-            'logFile': str,
+            'logFile': dict,
             'logLevel': str,
-            'logMaxBytes': int
+            'logMaxBytes': int,
+            'database': dict
         }
 
 RESPONSE_CODES = ResponseCodes()
@@ -23,7 +24,6 @@ def _prepare_config():
     #-----------------------------------------------------------
     #   Load main config file
     #-----------------------------------------------------------
-    #with open('/etc/squirrel_bot/config.yaml','r+') as c_file:
     with open('config/conf.yaml','r+') as c_file:
         config_opts = yaml.load(c_file, Loader=Loader)
 
@@ -33,10 +33,12 @@ def _prepare_config():
                     OPTS[conf_key] = conf_val
                 else:
                     continue
+            if not isinstance(OPTS['database'], dict):
+                OPTS['database'] = None
         else:
             print("Invalid config file: config/conf.yaml")
             return
-    
+
     #-----------------------------------------------------------
     #   Load MessageTypes
     #-----------------------------------------------------------
@@ -68,6 +70,10 @@ def _prepare_config():
         events = yaml.load(g_file, Loader=Loader)
 
         for event in events:
+            if event['handler'] == "DB" and OPTS['database'] is None:
+                print(f"Skipping event {event['type']} as it requires a database but none is configured.")
+                continue
+
             GATEWAY_EVENTS[event['type']] = {
                 'handler': event['handler']
             }

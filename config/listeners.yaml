@@ -13,6 +13,42 @@
 #       data:
 #         content: "Beep Boop Motherfucker."
 
+- type: MESSAGE_CREATE
+  filter:
+    - condition: contains
+      fields:
+        content: 
+          - 'patent'
+          - 'turvy'
+          - 'alligator'
+  actions:
+    - type: ADD_REACTION
+      data:
+        emoji: 'ma_patents:1404889758995578921'
+
+- type: MESSAGE_CREATE
+  filter:
+    - condition: contains
+      fields:
+        content: 
+          - 'bad bot'
+  actions:
+    - type: SEND_MESSAGE
+      data:
+        content: "Go fuck yourself"
+
+
+- type: MESSAGE_CREATE
+  filter:
+    - condition: contains
+      fields:
+        content: 
+          - 'good bot'
+  actions:
+    - type: SEND_MESSAGE
+      data:
+        content: "What, like I need your approval or something?"
+
 # - type: MESSAGE_CREATE
 #   filter:
 #     - condition: equals
